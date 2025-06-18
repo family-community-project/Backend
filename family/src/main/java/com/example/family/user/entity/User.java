@@ -20,7 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private String id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "family_id")
@@ -37,7 +37,6 @@ public class User {
     private String profileImage;
     private String familyType;
 
-    @OneToMany
-    @JoinColumn(name = "post_id")
+    @OneToMany(mappedBy = "user")
     private List<Post> postList;
 }

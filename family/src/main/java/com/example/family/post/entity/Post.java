@@ -21,7 +21,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private String id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -32,7 +32,6 @@ public class Post {
     private String postContents;
     private String time;
 
-    @OneToMany
-    @JoinColumn(name = "reply_id")
+    @OneToMany(mappedBy = "post")
     private List<Reply> replyList;
 }

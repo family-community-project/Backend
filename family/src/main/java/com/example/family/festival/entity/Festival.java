@@ -17,7 +17,7 @@ public class Festival {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "festival_id")
-    private String id;
+    private int id;
 
     private String festivalName;
     private String festivalLink;
