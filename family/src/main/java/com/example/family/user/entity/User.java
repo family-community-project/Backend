@@ -24,7 +24,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "family_id")
-    private String family_id;
+    private Family family;
 
     private String name;
     private String password; // 어떻게 보관해야하나?
