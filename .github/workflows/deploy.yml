@@ -43,6 +43,10 @@ jobs:
           cd codedeploy_artifact
           zip -r ../deploy.zip ./*
 
+      - name: Create application.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML_BASE64 }}" | base64 --decode > src/main/resources/application.yml
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -57,7 +61,7 @@ jobs:
       - name: Create CodeDeploy Deployment
         run: |
           aws deploy create-deployment \
-            --application-name dev-deploy \
-            --deployment-group-name dev-deploy-group \
+            --application-name ttasup-dev-cicd \
+            --deployment-group-name ttasup-dev-cicd-deploygroup \
             --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},key=deploy/deploy.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE
