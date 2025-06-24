@@ -98,3 +98,4 @@ echo "오류: ApplicationStart 단계에서 $APP_JAR 파일을 찾을 수 없음
   echo $! > "$PID_FILE"
   
   echo "애플리케이션이 시작. 로그는 $LOG_FILE 에서 확인."
+
