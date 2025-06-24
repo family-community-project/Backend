@@ -43,9 +43,11 @@ jobs:
           cd codedeploy_artifact
           zip -r ../deploy.zip ./*
 
-      - name: Create application.yml
-        run: |
-          echo "${{ secrets.APPLICATION_YML_BASE64 }}" | base64 --decode > src/main/resources/application.yml
+#     application.yml 추가 되면 주석 해제
+
+#      - name: Create application.yml
+#        run: |
+#          echo "${{ secrets.APPLICATION_YML_BASE64 }}" | base64 --decode > src/main/resources/application.yml
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
