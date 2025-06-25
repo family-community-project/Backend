@@ -20,21 +20,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "family_id")
     private Family family;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
+
     private String name;
-    private String password; // 어떻게 보관해야하나?
+    private String password; // 어떻게 보관해야하나? 암호화 필요
     private String accessToken;
     private String refreshToken;
-    private String gender;
-    private int age;
 
     private String profileComment;
     private String profileImage;
+
     private String familyType;
 
     @OneToMany(mappedBy = "user")
