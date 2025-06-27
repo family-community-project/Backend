@@ -21,6 +21,10 @@ public class Family {
     @Column(name = "family_id")
     private Long id;
 
+    private String familyName;
+
+    private String description;
+
 //    @OneToMany(mappedBy = "family")
 //    private List<User> userList;
 }
