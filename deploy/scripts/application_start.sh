@@ -1,5 +1,4 @@
-# 파일: deploy/scripts/application_start.sh (이전 버전과 동일)
-# ubuntu 사용자로 실행되며, 이제 모든 권한을 가지고 앱을 실행합니다.
+# ubuntu 사용자로 실행
 
 #!/bin/bash
 echo "[ApplicationStart] Spring Boot 앱 실행"

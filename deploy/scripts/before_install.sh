@@ -21,7 +21,7 @@ fi
 APP_DIR="/home/ubuntu/app"
 echo "배포 디렉토리($APP_DIR)를 준비합니다."
 
-# 디렉토리가 존재하지 않으면 생성합니다.
+# 디렉토리가 존재하지 않으면 생성
 if [ ! -d "$APP_DIR" ]; then
     mkdir -p "$APP_DIR"
 fi

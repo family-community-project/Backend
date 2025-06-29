@@ -3,7 +3,7 @@ name: Deploy Ttasup Spring Boot server to EC2
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
