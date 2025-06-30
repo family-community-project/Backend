@@ -5,12 +5,12 @@ echo "[BeforeInstall] 시작: 기존 앱 종료, JDK 설치, 디렉토리 준비
 # 'pkill'은 프로세스가 없으면 에러를 반환하므로 '|| true'를 붙여 스크립트가 중단되지 않게함
 echo "기존 Java 프로세스 종료 시도..."
 pkill -f 'app.jar' || true
-sleep 5 # 프로세스가 완전히 종료될 때까지 잠시 대기합니다.
+sleep 5 # 프로세스가 완전히 종료될 때까지 잠시 대기
 
 # 2. Java 17 (JDK) 설치 (없는 경우에만)
 # 'command -v java'는 java 명령어가 존재하면 true를 반환
 if ! command -v java &> /dev/null || ! java -version 2>&1 | grep -q "17"; then
-  echo "Java 17이 설치되어 있지 않습니다. 설치를 시작합니다."
+  echo "Java 17이 설치되어 있지 않습니다. 설치를 시작합니다..."
   apt-get update -y
   apt-get install -y openjdk-17-jdk
 else

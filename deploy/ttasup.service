@@ -1,0 +1,19 @@
+
+[Unit]
+Description=Ttasup Spring Boot Server (우분투)
+After=syslog.target network.target
+
+[Service]
+# 우분투의 기본 사용자 : ubuntu
+User=ubuntu
+# JAR 파일이 배포될 경로를 ubuntu 사용자의 홈 디렉토리로 변경
+ExecStart=/usr/bin/java -jar /home/ubuntu/app/app.jar
+SuccessExitStatus=143
+
+# 항상 재시작되도록 설정
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+

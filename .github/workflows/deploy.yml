@@ -39,6 +39,7 @@ jobs:
           mkdir codedeploy_artifact
           cp family/build/libs/family-0.0.1-SNAPSHOT.jar codedeploy_artifact/app.jar
           cp appspec.yml codedeploy_artifact/
+          cp deploy/ttasup.service codedeploy_artifact/
           cp -r deploy/scripts codedeploy_artifact/
           cd codedeploy_artifact
           zip -r ../deploy.zip ./*

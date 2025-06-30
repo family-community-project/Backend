@@ -1,22 +1,30 @@
 version: 0.0
 os: linux
-
 files:
-  - source: app.jar
-    destination: /home/ubuntu/app
-
+  - source: /app.jar
+    destination: /home/ubuntu/app/
+  - source: /ttasup.service
+    destination: /home/ubuntu/app/
 hooks:
+  # 새 버전을 설치하기 전 단계
   BeforeInstall:
-    - location: scripts/before_install.sh
+    # 1. 기존 앱 중지 (systemd로 제어)
+    - location: deploy/scripts/stop.sh
+      timeout: 60
+      runas: root
+    # 2. JDK 17 설치 및 디렉토리 (멱등성 유지)
+    - location: deploy/scripts/setup.sh
       timeout: 300
       runas: root
-
+  # 새 버전 설치가 끝난 후 단계
   AfterInstall:
-    - location: scripts/after_install.sh
+    # 3. 파일 권한 설정 및 systemd 서비스 등록
+    - location: deploy/scripts/register_service.sh
       timeout: 300
       runas: root
-
+  # 배포의 마지막 단계
   ApplicationStart:
-    - location: scripts/application_start.sh
-      timeout: 300
-      runas: ubuntu
+    # 4. systemd를 통해 새 버전 앱 시작
+    - location: deploy/scripts/start.sh
+      timeout: 60
+      runas: root
