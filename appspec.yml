@@ -9,22 +9,22 @@ hooks:
   # 새 버전을 설치하기 전 단계
   BeforeInstall:
     # 1. 기존 앱 중지 (systemd로 제어)
-    - location: deploy/scripts/stop.sh
+    - location: scripts/stop.sh
       timeout: 60
       runas: root
     # 2. JDK 17 설치 및 디렉토리 (멱등성 유지)
-    - location: deploy/scripts/setup.sh
+    - location: scripts/setup.sh
       timeout: 300
       runas: root
   # 새 버전 설치가 끝난 후 단계
   AfterInstall:
     # 3. 파일 권한 설정 및 systemd 서비스 등록
-    - location: deploy/scripts/register_service.sh
+    - location: scripts/register_service.sh
       timeout: 300
       runas: root
   # 배포의 마지막 단계
   ApplicationStart:
     # 4. systemd를 통해 새 버전 앱 시작
-    - location: deploy/scripts/start.sh
+    - location: scripts/start.sh
       timeout: 60
       runas: root
