@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,6 @@ public class Family {
 
     private String description;
 
-//    @OneToMany(mappedBy = "family")
-//    private List<User> userList;
+    @OneToMany(mappedBy = "family")
+    private List<User> members = new ArrayList<>();
 }
