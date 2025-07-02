@@ -26,6 +26,10 @@ public class Family {
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
     @OneToMany(mappedBy = "family")
     private List<User> members = new ArrayList<>();
 }

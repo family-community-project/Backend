@@ -26,6 +26,7 @@ public class FamilyService {
 
         Family family = Family.builder()
                 .familyName(request.getFamilyName())
+                .owner(user)
                 .build();
 
         Family familyGroup = familyRepository.save(family);
