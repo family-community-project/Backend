@@ -29,6 +29,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
 
+    private String email;
     private String name;
     private String password; // 어떻게 보관해야하나? 암호화 필요
     private String accessToken;
