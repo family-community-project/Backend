@@ -2,13 +2,12 @@ package com.example.family.user.entity;
 
 import com.example.family.post.entity.Post;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Builder
 @Table(name = "users")
@@ -22,7 +21,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "family_id")
     private Family family;
 

@@ -14,6 +14,8 @@ public interface InviteRepository {
 
     void decreaseRemainingUses(String code);
 
+    void deleteByCode(String code);
+
     boolean existsCode(String code);
 
 }

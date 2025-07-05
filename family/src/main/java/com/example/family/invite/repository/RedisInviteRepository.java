@@ -1,7 +1,6 @@
 package com.example.family.invite.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +10,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class RedisInviteRepository implements InviteRepository {
-    private final RedisTemplate<String, String> redisTemplate;
+    private final StringRedisTemplate redisTemplate;
     private static final String PREFIX = "invite:";
     private static final Duration EXPIRE_DURATION = Duration.ofDays(1);
 
@@ -41,7 +40,19 @@ public class RedisInviteRepository implements InviteRepository {
 
     @Override
     public void decreaseRemainingUses(String code) {
+        String value = (String) redisTemplate.opsForHash().get(PREFIX + code, "remaining");
+        try {
+            Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("remaining 값이 정수가 아닙니다: " + value);
+        }
+
         redisTemplate.opsForHash().increment(PREFIX + code, "remaining", -1);
+    }
+
+    @Override
+    public void deleteByCode(String code) {
+        redisTemplate.delete(PREFIX + code);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.example.family.invite.service.InviteService;
 import com.example.family.user.entity.User;
 import com.example.family.user.service.FamilyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,13 @@ public class InviteController {
         User user = authService.findAuthenticatedUser(authHeader);
         String code = inviteService.getOrCreateInviteCode(user.getId(), request.getCount());
         return new InviteCreateRs(code);
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<Void> joinFamilyGroup(@RequestHeader("Authorization") String authHeader, @RequestParam String code) {
+        User user = authService.findAuthenticatedUser(authHeader);
+        inviteService.joinFamilyByCode(code, user.getId());
+        return ResponseEntity.ok().build();
     }
 
 }
