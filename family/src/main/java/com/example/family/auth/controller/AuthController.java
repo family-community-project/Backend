@@ -34,10 +34,11 @@ public class AuthController {
     public String getAuthKakao() {
 
         // LOGIN 요청 받아서 처리 후 토큰 리턴
-        return "redirect:" + AUTHORIZE_URI +
-                "?response_type=code" +
-                "&client_id=" + CLIENT_ID +
-                "&redirect_uri=" + REDIRECT_URI;
+        String uri = "redirect:" + AUTHORIZE_URI +
+                     "?response_type=code" +
+                     "&client_id=" + CLIENT_ID +
+                     "&redirect_uri=" + REDIRECT_URI;
+        return uri;
     }
 
     @GetMapping("/auth/token")
