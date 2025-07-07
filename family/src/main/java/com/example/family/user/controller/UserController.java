@@ -1,9 +1,13 @@
 package com.example.family.user.controller;
 
 import com.example.family.user.dto.request.UserRegisterRequest;
+import com.example.family.user.dto.response.AuthMailResponse;
+import com.example.family.user.dto.response.CodeCheckResponse;
 import com.example.family.user.service.UserService;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,52 +27,54 @@ public class UserController {
     private final Map<String, Boolean> emailAuthBooleanMap = new HashMap<>();
 
     @PostMapping("/register")
-    public String register(@RequestParam("email") String email,
+    public ResponseEntity<Boolean> register(@RequestParam("email") String email,
                            @RequestParam("name") String name,
                            @RequestParam("password") String password) {
-        String answer = "register fail, email auth not completed";
+        ResponseEntity<Boolean> responseEntity = new ResponseEntity<>(HttpStatus.OK);
+
         if (emailAuthBooleanMap.containsKey(email) && emailAuthBooleanMap.get(email)) {
-            Long userId = userService.registerUser(new UserRegisterRequest(email, name, password));
-            answer = userId.toString();
+            userService.registerUser(new UserRegisterRequest(email, name, password));
+            responseEntity = ResponseEntity.ok(true);
         }
 
-        return answer;
+        return responseEntity;
     }
 
     @GetMapping("auth/email")
-    public String authEmail(@RequestParam("email") String email) {
+    public ResponseEntity<AuthMailResponse> authEmail(@RequestParam("email") String email) {
 
+        ResponseEntity<AuthMailResponse> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        String authString = generateAuthString();
+        String authCode = generateAuthString();
         try {
             mimeMessage.setRecipients(MimeMessage.RecipientType.TO, email);
 
             mimeMessage.setSubject("이메일 인증");
             String body = "";
             body += "<h3>" + "요청하신 인증 번호입니다." + "</h3>";
-            body += "<h1>" + authString + "</h1>";
+            body += "<h1>" + authCode + "</h1>";
             body += "<h3>" + "감사합니다." + "</h3>";
             mimeMessage.setText(body,"UTF-8", "html");
 
-            javaMailSender.send(mimeMessage);
-
-            emailAuthStringMap.put(email, authString);
+//            javaMailSender.send(mimeMessage);
+            emailAuthStringMap.put(email, authCode);
+            responseEntity = ResponseEntity.ok(new AuthMailResponse(true, authCode));
             System.out.println("emailAuthMap: " + emailAuthStringMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return authString;
+        return responseEntity;
     }
 
-    @GetMapping("auth/email/check")
-    public String authEmailCheck(@RequestParam("email") String email, @RequestParam("authString") String authString) {
-        if (emailAuthStringMap.containsKey(email) && emailAuthStringMap.get(email).equals(authString)) {
+    @GetMapping("code/check")
+    public ResponseEntity<CodeCheckResponse> authEmailCheck(@RequestParam("email") String email, @RequestParam("code") String authCode) {
+        if (emailAuthStringMap.containsKey(email) && emailAuthStringMap.get(email).equals(authCode)) {
             emailAuthBooleanMap.put(email, true);
-            return "success";
+            return new ResponseEntity<>(new CodeCheckResponse(true), HttpStatus.OK);
         } else {
             emailAuthBooleanMap.put(email, false);
-            return "fail";
+            return new ResponseEntity<>(new CodeCheckResponse(false), HttpStatus.OK);
         }
     }
 
