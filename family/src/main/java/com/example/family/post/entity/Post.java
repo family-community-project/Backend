@@ -1,5 +1,6 @@
 package com.example.family.post.entity;
 
+import com.example.family.like.entity.Like;
 import com.example.family.reply.entity.Reply;
 import com.example.family.user.entity.User;
 import jakarta.persistence.*;
@@ -19,9 +20,9 @@ import java.util.List;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "post_id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -31,7 +32,11 @@ public class Post {
     private String subject;
     private String postContents;
     private String time;
+    private Long likeCount;
 
     @OneToMany(mappedBy = "post")
     private List<Reply> replyList;
+
+    @OneToMany(mappedBy = "post")
+    private List<Like> likeList;
 }
