@@ -7,16 +7,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
 @Table(name = "replies")
+@Data
 public class Reply {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reply_id")
     private int id;
 
@@ -25,4 +25,8 @@ public class Reply {
     private Post post;
 
     private String replyContents;
+
+    @Column(name = "time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private String replyTime;
 }
