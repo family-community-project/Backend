@@ -1,13 +1,13 @@
 package com.example.family.user.entity;
 
+import com.example.family.like.entity.Like;
+import com.example.family.place.entity.UserPlace;
 import com.example.family.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Builder
 @Table(name = "users")
@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -42,4 +41,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Post> postList;
+
+    @OneToMany(mappedBy = "user")
+    private List<Like> likeList;
 }
