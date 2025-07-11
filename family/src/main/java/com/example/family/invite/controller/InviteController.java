@@ -1,8 +1,8 @@
 package com.example.family.invite.controller;
 
-import com.example.family.config.interceptor.AuthService;
+import com.example.family.auth.service.AuthService;
 import com.example.family.invite.dto.request.InviteCreateRq;
-import com.example.family.invite.dto.request.InviteCreateRs;
+import com.example.family.invite.dto.response.InviteCreateRs;
 import com.example.family.invite.service.InviteService;
 import com.example.family.user.entity.User;
 import com.example.family.user.service.FamilyService;

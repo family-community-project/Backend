@@ -1,9 +1,12 @@
 package com.example.family;
 
+import com.example.family.config.JwtProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties(JwtProperties.class)
 public class FamilyApplication {
 
 	public static void main(String[] args) {
