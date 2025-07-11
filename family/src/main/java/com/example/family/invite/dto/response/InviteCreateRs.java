@@ -1,4 +1,4 @@
-package com.example.family.invite.dto.request;
+package com.example.family.invite.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

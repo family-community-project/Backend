@@ -1,6 +1,6 @@
 package com.example.family.user.controller;
 
-import com.example.family.config.interceptor.AuthService;
+import com.example.family.auth.service.AuthService;
 import com.example.family.user.dto.request.FamilyCreateRq;
 import com.example.family.user.entity.Family;
 import com.example.family.user.service.FamilyService;

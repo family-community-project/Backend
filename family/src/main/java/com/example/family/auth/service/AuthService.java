@@ -1,4 +1,4 @@
-package com.example.family.config.interceptor;
+package com.example.family.auth.service;
 
 import com.example.family.exception.UserNotFoundException;
 import com.example.family.user.entity.User;
