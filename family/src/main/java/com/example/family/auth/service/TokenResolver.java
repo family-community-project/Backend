@@ -1,4 +1,4 @@
-package com.example.family.config.interceptor;
+package com.example.family.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
