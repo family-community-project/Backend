@@ -9,9 +9,9 @@ public class CookieUtil {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setSecure(true); // HTTPS 환경에만 전송되도록
+        cookie.setSecure(true);
         cookie.setMaxAge(maxAge);
-        cookie.setDomain("localhost"); // 또는 prod 환경에서 바꿔주면 됨
+        cookie.setDomain("localhost");
         response.addCookie(cookie);
     }
 
