@@ -25,10 +25,17 @@ public class TokenProvider {
         this.secretKey = Keys.hmacShaKeyFor(jwtProperties.getSecretKeyBytes());
     }
 
-
     public String createAccessToken(Long userId) {
+        return createToken(userId, jwtProperties.getAccessTokenValidityInSeconds());
+    }
+
+    public String createRefreshToken(Long userId) {
+        return createToken(userId, jwtProperties.getRefreshTokenValidityInSeconds());
+    }
+
+    public String createToken(Long userId, long expiration) {
         Date now = new Date();
-        Date expireDate = new Date(now.getTime() + jwtProperties.getTokenValidityInSeconds() * 1000L);
+        Date expireDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .setSubject(String.valueOf(userId)) // 사용자 ID 설정
@@ -48,6 +55,7 @@ public class TokenProvider {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+
     }
 
     public Long getUserIdFromToken(String token) {
@@ -58,4 +66,5 @@ public class TokenProvider {
                 .getBody()
                 .getSubject());
     }
+
 }

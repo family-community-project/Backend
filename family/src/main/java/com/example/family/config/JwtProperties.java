@@ -12,9 +12,18 @@ import java.util.Base64;
 public class JwtProperties {
     private String header;
     private String secret;
-    private long tokenValidityInSeconds;
+    private long accessTokenValidityInSeconds;
+    private long refreshTokenValidityInSeconds;
 
     public byte[] getSecretKeyBytes() {
         return Base64.getDecoder().decode(secret);
+    }
+
+    public long getAccessTokenValidityInSeconds() {
+        return accessTokenValidityInSeconds * 1000L;
+    }
+
+    public long getRefreshTokenValidityInSeconds() {
+        return refreshTokenValidityInSeconds * 1000L;
     }
 }
