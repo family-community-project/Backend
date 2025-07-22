@@ -36,38 +36,7 @@
 <br />
 <br />
 
-## 👥 백엔드 팀원
 
-<table>
-  <tr>
-  
-    <td align="center">
-      <a href="https://github.com/bear1230">
-      <img src="https://avatars.githubusercontent.com/bear1230" width="100px;" alt="bear1230's profile picture"/>
-      </a>
-      <br />
-      <b>김지희</b>
-      <br />
-       <!-- <a href="https://github.com/bear1230">GitHub</a> -->
-      <sub>Backend 👩🏻‍💻 </sub>
-      <br />
-    </td>
-    <td align="center">
-      <a href="https://github.com/yuncheol-AHN">
-      <img src="https://avatars.githubusercontent.com/yuncheol-AHN" width="100px;" alt="yuncheol-AHN's profile picture"/>
-        </a>
-      <br />
-      <b>안윤철</b>
-      <br />
-     <!-- <a href="https://github.com/yuncheol-AHN">GitHub</a> -->
-      <sub>Backend 🧑🏻‍💻</sub>
-      <br />
-    </td>
-   
-  </tr>
-</table>
-
-<br />
 
 
 <br />
