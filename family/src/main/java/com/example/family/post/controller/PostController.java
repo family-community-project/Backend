@@ -6,10 +6,7 @@ import com.example.family.post.repository.PostRepository;
 import com.example.family.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/post")
@@ -19,6 +16,18 @@ public class PostController {
     private final PostService postService;
     private final PostRepository postRepository;
 
+    // 게시글 조회 기준 ,,, (전체, 사람, ...)
+
+    @GetMapping("/list")
+    public ResponseEntity<?> searchPost() {
+
+    }
+
+    @GetMapping("/one")
+    public ResponseEntity<?> getPost(@RequestParam Long id) {
+        
+    }
+
     @PostMapping("/create")
     public ResponseEntity<CreatePostResponse> createPost(@RequestBody CreatePostRequest request) {
 
@@ -27,5 +36,10 @@ public class PostController {
         } else {
             return ResponseEntity.ok(new CreatePostResponse(false));
         }
+    }
+
+    @PostMapping("/update")
+    public  ResponseEntity<CreatePostResponse> updatePost(@RequestBody CreatePostRequest request) {
+
     }
 }

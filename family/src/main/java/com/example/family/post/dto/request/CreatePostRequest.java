@@ -11,5 +11,5 @@ public class CreatePostRequest {
     String author;
     String title;
     String contents;
-    List<byte[]> image;
+    List<byte[]> images;
 }
