@@ -14,6 +14,7 @@ public class JwtProperties {
     private String secret;
     private long accessTokenValidityInSeconds;
     private long refreshTokenValidityInSeconds;
+    private long inviteTokenValidityInSeconds;
 
     public byte[] getSecretKeyBytes() {
         return Base64.getDecoder().decode(secret);

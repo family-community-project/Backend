@@ -1,11 +1,11 @@
 package com.example.family.invite.controller;
 
-import com.example.family.auth.service.AuthService;
+import com.example.family.auth.service.TokenProvider;
 import com.example.family.invite.dto.request.InviteCreateRq;
 import com.example.family.invite.dto.response.InviteCreateRs;
 import com.example.family.invite.service.InviteService;
 import com.example.family.user.entity.User;
-import com.example.family.user.service.FamilyService;
+import com.example.family.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +15,35 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class InviteController {
     private final InviteService inviteService;
-    private final AuthService authService;
-    private final FamilyService familyService;
+    private final TokenProvider tokenProvider;
+    private final UserRepository userRepository;
+
 
     @PostMapping("/create")
-    public InviteCreateRs createInviteCode(@RequestHeader("Authorization") String authHeader, @RequestBody InviteCreateRq request) {
-        User user = authService.findAuthenticatedUser(authHeader);
-        String code = inviteService.getOrCreateInviteCode(user.getId(), request.getCount());
-        return new InviteCreateRs(code);
+    public ResponseEntity<InviteCreateRs> createInvite(@RequestHeader("Authorization") String authHeader,
+                                                       @RequestBody InviteCreateRq request) {
+        Long userId = extractUserIdFromToken(authHeader);
+        User user = userRepository.findById(userId).orElseThrow();
+
+        String url = inviteService.generateInviteUrl(user.getFamily().getId(), request.getCount());
+        return ResponseEntity.ok(new InviteCreateRs(url));
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> joinFamilyGroup(@RequestHeader("Authorization") String authHeader, @RequestParam String code) {
-        User user = authService.findAuthenticatedUser(authHeader);
-        inviteService.joinFamilyByCode(code, user.getId());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> joinByCode(@RequestParam String code,
+                                             @RequestHeader("Authorization") String authHeader) {
+        Long userId = extractUserIdFromToken(authHeader);
+        inviteService.joinFamilyByCode(code, userId);
+        return ResponseEntity.ok("가족 그룹 참여 완료");
     }
 
+    private Long extractUserIdFromToken(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Authorization 헤더가 유효하지 않습니다.");
+        }
+        String token = authHeader.substring(7);
+        return tokenProvider.getUserIdFromToken(token);
+    }
 }
+
+
