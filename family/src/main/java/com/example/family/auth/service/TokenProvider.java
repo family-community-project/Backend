@@ -1,6 +1,7 @@
 package com.example.family.auth.service;
 
 import com.example.family.config.JwtProperties;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -65,6 +66,38 @@ public class TokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject());
+    }
+
+
+    public String createInviteToken(Long familyId, int maxUses) {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + jwtProperties.getInviteTokenValidityInSeconds());
+
+        return Jwts.builder()
+                .setSubject("invite")
+                .claim("familyId", familyId)
+                .claim("maxUses", maxUses)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public boolean validateInviteToken(String token) {
+        try {
+            Claims claims = getClaims(token);
+            return "invite".equals(claims.getSubject()); // 주제 확인
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
 }

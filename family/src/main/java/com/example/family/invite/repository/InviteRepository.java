@@ -4,7 +4,7 @@ package com.example.family.invite.repository;
 import java.util.Optional;
 
 public interface InviteRepository {
-    void saveInviteCode(String code, Long familyLd, int maxUses);
+    void saveInviteCode(String code, Long familyId, int maxUses);
 
     Optional<String> findExistingCodeByFamilyId(Long familyId);
 
@@ -18,4 +18,5 @@ public interface InviteRepository {
 
     boolean existsCode(String code);
 
+    boolean isCodeUsable(String code);
 }
